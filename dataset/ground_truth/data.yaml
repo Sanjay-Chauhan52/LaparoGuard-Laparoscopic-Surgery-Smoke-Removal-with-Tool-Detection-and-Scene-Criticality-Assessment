@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 2
+names: ['Grasper', 'Hook']
+
+roboflow:
+  workspace: works-workspace-2w1rc
+  project: laproscopic-ilbf0
+  version: 1
+  license: Private
+  url: https://app.roboflow.com/works-workspace-2w1rc/laproscopic-ilbf0/1
