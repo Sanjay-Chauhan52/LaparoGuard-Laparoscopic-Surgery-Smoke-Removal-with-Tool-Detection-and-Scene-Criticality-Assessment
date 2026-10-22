@@ -1,0 +1,13 @@
+# Laparoscopic Detection Dataset Configuration
+path: ./dataset  # Root dataset directory
+
+train: images/train
+val: images/val
+test: images/test
+
+# Number of classes
+nc: 1  # Update with the number of your classes
+
+# Class names
+names:
+  0: instrument  # Update with your actual class names

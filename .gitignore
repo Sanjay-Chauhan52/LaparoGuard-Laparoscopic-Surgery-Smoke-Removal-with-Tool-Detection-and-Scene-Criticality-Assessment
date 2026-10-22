@@ -1,0 +1,36 @@
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.bak
+
+# Large Video Files (>100MB exceeds GitHub limit)
+# *.mp4 (Uncomment if video >100MB)
+*.avi
+*.mov
+*.mkv
+
+# Large Weights and Models
+*.pt
+*.pth
+*.onnx
+*.engine
+
+# YOLO Run outputs & logs
+runs/
+critical_output/
+critical_output_improved/
+detection_output/
+test_output/
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
