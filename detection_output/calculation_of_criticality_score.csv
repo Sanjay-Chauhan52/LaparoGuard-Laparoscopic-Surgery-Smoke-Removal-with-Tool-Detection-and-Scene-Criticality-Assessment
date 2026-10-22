@@ -1,0 +1,15 @@
+Factor,Code Variable,Maximum Weight,Exact Formula Used in Code,Why this Weight (Clinical Reason)
+1. Hook Cutting,cutting_score,0.50,+0.50 if Hook is actively cutting tissue,Highest hazard: Active electrocautery burning/cutting carries the highest risk of accidental organ puncture.
+2. Tissue Contact,contact_score,0.35,0.35 x Overlap Ratio,Tools pressing deep against organ tissue have high risk of tear or hemorrhage.
+3. Tool Density,density_score,0.15,0.15 x min(1.0 - Tool Count / 3),Multiple instruments in a small space cause blind spots and crowding.
+4. Rapid Movement,movement_score,0.15,0.15 x min(1.0 - Pixel Speed / 100),Fast jerky hand movements indicate sudden trauma or loss of control.
+5. Tool Proximity,proximity_score,0.10,0.10 x (1.0 - Distance / 150px),Instruments closer than 150 pixels risk collision (tool clashing).
+,,,,
+FINAL FORMULA,,,,
+Criticality Score = S_cutting + S_contact + S_density + S_movement + S_proximity,,,,
+Final Score = min(1.0 - 5-Frame Moving Average of raw score),,,,
+,,,,
+RISK LEVELS,,,,
+Green Zone (Safe),0.00 to 0.30,,Tools moving freely in open space - no contact - no cutting,
+Yellow Zone (Moderate Risk),0.30 to 0.60,,Tools touching or pulling tissue - or moving close together,
+Red Zone (Critical Risk),0.60 to 1.00,,Active Hook Cutting combined with deep tissue contact - immediate high alert,

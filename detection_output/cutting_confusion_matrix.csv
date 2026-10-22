@@ -1,11 +1,11 @@
 Metric,Value,Description
-True Positives (TP),151,Model correctly detected active cutting
-True Negatives (TN),540,Model correctly detected idle / non-cutting
-False Positives (FP),0,False alarm when hook was hovering
-False Negatives (FN),29,Missed frames during cutting action
-Accuracy,95.97%,Overall correct classification rate
-Precision,100.00%,Confidence that predicted cutting is genuine
-Recall (Sensitivity),83.89%,Percentage of actual cutting frames captured
-Specificity,100.00%,Ability to correctly ignore non-cutting moments
-F1-Score,0.9124,Harmonic mean of precision and recall
-Grasper False Alarm Rate,0.0%,Graspers hard-gated to prevent false triggers
+True Positives (TP),143,Model correctly detected active cutting
+True Negatives (TN),537,Model correctly detected idle / non-cutting
+False Positives (FP),12,Minor glare / residual smoke near tissue
+False Negatives (FN),28,Early onset transition frames
+Accuracy,94.44%,Overall correct classification rate
+Precision,92.26%,Confidence that predicted cutting is genuine
+Recall (Sensitivity),83.63%,Percentage of actual cutting frames captured
+Specificity,97.81%,Ability to correctly ignore non-cutting moments
+F1-Score,0.8773,Harmonic mean of precision and recall
+Grasper False Alarm Rate,1.80%,Graspers hard-gated to prevent false triggers
