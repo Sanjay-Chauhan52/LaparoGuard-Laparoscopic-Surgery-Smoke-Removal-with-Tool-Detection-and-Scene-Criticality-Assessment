@@ -1,0 +1,9 @@
+Evaluation Metric,Smoky (Raw),Desmoked (Enhanced),Gain / Improvement
+Total Ground Truth Tools,79 tools,79 tools,Human Reference Benchmark
+True Positives (Correct Tools Found),43,45,+2 Tools Recovered
+False Negatives (Missed Tools),36,34,Fewer Misses
+False Positives (Hallucinations),22,19,Cleaner Detections
+Recall (Sensitivity),54.4%,57.0%,+2.6% Boost
+Precision,66.2%,70.3%,+4.1% Boost
+F1-Score,0.597,0.629,+0.032 Improvement
+Mean IoU with Ground Truth,0.614,0.620,Tighter boundary overlap

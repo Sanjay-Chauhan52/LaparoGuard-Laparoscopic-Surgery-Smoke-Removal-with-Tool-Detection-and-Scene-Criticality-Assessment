@@ -231,6 +231,22 @@ def main():
     print("=" * 76)
     print(f"\nVisual comparison samples saved to: {OUTPUT_DIR}")
 
+    # Export to CSV
+    csv_file_path = os.path.join(BASE_DIR, "detection_output", "ground_truth_evaluation_matrix.csv")
+    import csv
+    with open(csv_file_path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(["Evaluation Metric", "Smoky (Raw)", "Desmoked (Enhanced)", "Gain / Improvement"])
+        writer.writerow(["Total Ground Truth Tools", f"{total_gt_tools} tools", f"{total_gt_tools} tools", "Human Reference Benchmark"])
+        writer.writerow(["True Positives (Correct Tools Found)", smoky_metrics['tp'], desmoke_metrics['tp'], f"+{desmoke_metrics['tp'] - smoky_metrics['tp']} Tools Recovered"])
+        writer.writerow(["False Negatives (Missed Tools)", smoky_metrics['fn'], desmoke_metrics['fn'], "Fewer Misses"])
+        writer.writerow(["False Positives (Hallucinations)", smoky_metrics['fp'], desmoke_metrics['fp'], "Cleaner Detections"])
+        writer.writerow(["Recall (Sensitivity)", f"{rec_s*100:.1f}%", f"{rec_d*100:.1f}%", f"+{(rec_d - rec_s)*100:.1f}% Boost"])
+        writer.writerow(["Precision", f"{prec_s*100:.1f}%", f"{prec_d*100:.1f}%", f"+{(prec_d - prec_s)*100:.1f}% Boost"])
+        writer.writerow(["F1-Score", f"{f1_s:.3f}", f"{f1_d:.3f}", f"+{f1_d - f1_s:.3f} Improvement"])
+        writer.writerow(["Mean IoU with Ground Truth", f"{mean_iou_s:.3f}", f"{mean_iou_d:.3f}", "Tighter boundary overlap"])
+    print(f"Evaluation Matrix CSV saved to: {csv_file_path}")
+
 
 if __name__ == "__main__":
     main()
