@@ -351,8 +351,6 @@ When presenting to your professors and project evaluators, here are simple, clea
 
 - **Cholec80 Dataset**: Twinanda et al., *"EndoNet: A Deep Architecture for Recognition Tasks on Laparoscopic Videos"*, IEEE TMI, 2017.
 - **Ultralytics YOLOv8**: Modern real-time object detection architecture.
-- **Pretrained Weights**: `cesaraha/yolov8s-surgical-instrument-detection-cholec80` via Hugging Face.
-- Developed for **B.Tech 7th Semester Healthcare AI Project**.
 
 ---
 
