@@ -26,7 +26,6 @@ __pycache__/
 runs/
 critical_output/
 critical_output_improved/
-detection_output/
 test_output/
 
 # IDE and OS

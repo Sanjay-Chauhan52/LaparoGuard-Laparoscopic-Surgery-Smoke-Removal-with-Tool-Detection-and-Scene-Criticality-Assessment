@@ -1,4 +1,4 @@
-# LaparoGuard: AI-Powered Laparoscopic Surgical Tool Detection & Critical Phase Risk Assessment System
+# LaparoGuard: Laparoscopic Surgery smoke removal with Surgical Tool Detection & Critical Phase Risk Assessment System
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-red.svg)](https://pytorch.org/)
