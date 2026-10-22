@@ -61,55 +61,66 @@ During laparoscopic surgery, doctors insert a small camera and thin instruments 
 
 ##  4. System Architecture
 
-The pipeline takes in a surgical video and processes it step-by-step:
+The complete LaparoGuard system integrates two unified operational pipelines:
+1. **Smoke Diagnostic & Desmoking Pipeline** (`diagnostic_detection.py` and `generate_detections.py`)
+2. **Real-Time Instrument Detection & Scene Criticality Pipeline** (`critical_detection_improved.py`)
 
 ```
-                           Laparoscopic Video Input
-                                      │
-                                      ▼
-                        ┌───────────────────────────┐
-                        │ Preprocessing & Resizing  │
-                        │    (640x640, BGR & HSV)   │
-                        └─────────────┬─────────────┘
-                                      │
-              ┌───────────────────────┴───────────────────────┐
-              ▼                                               ▼
-┌───────────────────────────┐                   ┌───────────────────────────┐
-│     YOLOv8s Detector      │                   │   Tissue Color Mask       │
-│ (Cholec80 7 Tool Classes) │                   │ (HSV Fleshy Tissue Range) │
-└─────────────┬─────────────┘                   └─────────────┬─────────────┘
-              │                                               │
-              ├───────────────────────┬───────────────────────┘
-              ▼                       ▼
-┌───────────────────────────┐   ┌───────────────────────────┐
-│   Kinematics & Tracking   │   │    Tool-Tissue Contact    │
-│  - Movement speed (px)    │   │  - Overlap ratio with     │
-│  - Distance between tools │   │    segmented organ mask   │
-└─────────────┬─────────────┘   └─────────────┬─────────────┘
-              │                               │
-              └───────────────┬───────────────┘
-                              │
-                              ▼
-                ┌───────────────────────────┐
-                │   Hook Cutting Checker    │
-                │  - Is tool a Hook?        │
-                │  - Is tip touching organ? │
-                │  - Is cautery firing?     │
-                └─────────────┬─────────────┘
-                              │
-                              ▼
-                ┌───────────────────────────┐
-                │ Criticality Score Engine  │
-                │  - Weighted Sum Formula   │
-                │  - 5-Frame Smoothing      │
-                └─────────────┬─────────────┘
-                              │
-              ┌───────────────┴───────────────┐
-              ▼                               ▼
-┌───────────────────────────┐   ┌───────────────────────────┐
-│  Live Video HUD Overlay   │   │ Telemetry CSV File Export │
-│ (Green / Yellow / Red bar)│   │   (critical_events.csv)   │
-└───────────────────────────┘   └───────────────────────────┘
+                         Input Laparoscopic Video / Surgical Stream
+                                             │
+                     ┌───────────────────────┴───────────────────────┐
+                     ▼                                               ▼
+     ┌───────────────────────────────┐               ┌───────────────────────────────┐
+     │   TRACK 1: SMOKE DIAGNOSTIC   │               │    TRACK 2: REAL-TIME TOOL    │
+     │      & DESMOKING PIPELINE     │               │    & CRITICALITY PIPELINE     │
+     └───────────────┬───────────────┘               └───────────────┬───────────────┘
+                     │                                               │
+                     ▼                                               ▼
+     ┌───────────────────────────────┐               ┌───────────────────────────────┐
+     │ Smoke & Visibility Analysis   │               │   Frame Ingestion & Scaling   │
+     │ - 4x4 Grid Local Contrast     │               │      (640x640, BGR / HSV)     │
+     │ - Laplacian Sharpness Loss    │               └───────────────┬───────────────┘
+     │ - Canny Edge Density Loss     │                               │
+     │ - Formula: Visibility < 0.18  │               ┌───────────────┴───────────────┐
+     └───────────────┬───────────────┘               ▼                               ▼
+                     │               ┌───────────────────────────────┐ ┌───────────────────────────────┐
+                     ▼               │  YOLOv8s Tool Detection Head  │ │   Laparoscopic Color Engine   │
+     ┌───────────────────────────────┐ │   (Cholec80 7 Tool Classes)   │ │    HSV Tissue Segmentation    │
+     │ Desmoking & Visibility Boost  │ └─────────────┬─────────────────┘ │    (Liver, Gallbladder, Fat)  │
+     │ - Raw Smoky Frames (660 imgs) │               │                   └─────────────┬─────────────────┘
+     │ - Desmoked Frames (660 imgs)  │               ├─────────────────────────────────┘
+     │ - Confidence Gain (+27%)      │               ▼
+     └───────────────┬───────────────┘ ┌───────────────────────────────┐
+                     │                 │     Spatial Kinematics &      │
+                     ▼                 │     Tool-Tissue Interaction   │
+     ┌───────────────────────────────┐ │  - Velocity & Inter-Tool Dist │
+     │ Detection Comparison Output   │ │  - Tissue Overlap Area Ratio  │
+     │ - smoky_annotated/ & CSV      │ └─────────────┬─────────────────┘
+     │ - desmoke_annotated/ & CSV    │               │
+     └───────────────────────────────┘               ▼
+                                       ┌───────────────────────────────┐
+                                       │   Hook Cutting Discriminator  │
+                                       │  - Tool Class = 'Hook' Gate   │
+                                       │  - Tip Contact >= 30% Tissue  │
+                                       │  - Cautery Burst (V > 200)    │
+                                       │  - 10-Frame Cooldown Filter   │
+                                       └─────────────┬─────────────────┘
+                                                     │
+                                                     ▼
+                                       ┌───────────────────────────────┐
+                                       │   Criticality Scoring Engine  │
+                                       │  - Dynamic Formula (0.0 - 1.0)│
+                                       │  - 5-Frame Temporal Smoothing │
+                                       └─────────────┬─────────────────┘
+                                                     │
+                                     ┌───────────────┴───────────────┐
+                                     ▼                               ▼
+                      ┌───────────────────────────────┐ ┌───────────────────────────────┐
+                      │   Live Video HUD Overlay      │ │  Telemetry CSV File Export    │
+                      │  - Tool BBoxes & Tip Box      │ │    (critical_events.csv)      │
+                      │  - Dynamic Color-Coded Gauge  │ │    - 18 Parameters / Frame    │
+                      │  - Live Safety Status Alerts  │ │    - Full Surgical Audit Log  │
+                      └───────────────────────────────┘ └───────────────────────────────┘
 ```
 
 ---
