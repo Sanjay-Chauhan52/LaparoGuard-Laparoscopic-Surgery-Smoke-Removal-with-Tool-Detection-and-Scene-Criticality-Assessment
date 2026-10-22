@@ -28,8 +28,9 @@ critical_output/
 critical_output_improved/
 test_output/
 
-# IDE and OS
+# IDE, OS, and Temporary files
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
+~$*
