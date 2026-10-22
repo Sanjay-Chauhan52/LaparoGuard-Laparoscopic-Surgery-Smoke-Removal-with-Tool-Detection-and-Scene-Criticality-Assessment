@@ -5,6 +5,7 @@
 [![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-brightgreen.svg)](https://github.com/ultralytics/ultralytics)
 [![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-5C3EE8.svg)](https://opencv.org/)
 [![Dataset](https://img.shields.io/badge/Dataset-Cholec80-orange.svg)](http://ciss.u-strasbg.fr/cholec80/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
@@ -350,5 +351,13 @@ When presenting to your professors and project evaluators, here are simple, clea
 
 - **Cholec80 Dataset**: Twinanda et al., *"EndoNet: A Deep Architecture for Recognition Tasks on Laparoscopic Videos"*, IEEE TMI, 2017.
 - **Ultralytics YOLOv8**: Modern real-time object detection architecture.
+- **Pretrained Weights**: `cesaraha/yolov8s-surgical-instrument-detection-cholec80` via Hugging Face.
+- Developed for **B.Tech 7th Semester Healthcare AI Project**.
+
+---
+
+## 14. License
+
+This project is licensed under the **MIT License** — see the [LICENSE](file:///C:/Users/thesa/Desktop/LaparoscopicDetection/LICENSE) file for details.
 
 
