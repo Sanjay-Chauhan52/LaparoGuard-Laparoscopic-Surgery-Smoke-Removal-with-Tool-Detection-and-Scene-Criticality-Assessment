@@ -8,7 +8,7 @@
 
 ---
 
-## 📌 1. What is this Project?
+##  1. What is this Project?
 
 **LaparoGuard** is a computer vision and deep learning system built for **laparoscopic surgery** (minimally invasive keyhole surgery, like gallbladder removal). 
 
@@ -24,7 +24,7 @@ During laparoscopic surgery, doctors insert a small camera and thin instruments 
 
 ---
 
-## 🎯 2. Project Objectives
+##  2. Project Objectives
 
 1. **Enhance Surgical Vision**: Analyze how surgical smoke reduces image contrast and sharpness, and prove that desmoking (smoke removal) significantly boosts tool detection accuracy.
 2. **Real-Time Instrument Tracking**: Detect 7 essential laparoscopic tools at 30+ frames per second so the system can run live during a surgery.
@@ -34,7 +34,7 @@ During laparoscopic surgery, doctors insert a small camera and thin instruments 
 
 ---
 
-## 🚀 3. Key Features
+##  3. Key Features
 
 - **7-Class Tool Detection**:
   - `Hook`: L-shaped electric hook used for cutting and dissection.
@@ -58,7 +58,7 @@ During laparoscopic surgery, doctors insert a small camera and thin instruments 
 
 ---
 
-## 🧠 4. System Architecture
+##  4. System Architecture
 
 The pipeline takes in a surgical video and processes it step-by-step:
 
@@ -113,7 +113,7 @@ The pipeline takes in a surgical video and processes it step-by-step:
 
 ---
 
-## 📐 5. How the Formulas & Scoring Work
+##  5. How the Formulas & Scoring Work
 
 ### A. Criticality Score Formula
 The total criticality score is a number between **0.0 (safe)** and **1.0 (high risk)**. It is calculated by adding 5 separate components:
@@ -156,7 +156,7 @@ $$\text{Visibility} = 0.35(\text{Local Contrast}) + 0.20(\text{Global Contrast})
 
 ---
 
-## 📊 6. About the Datasets
+##  6. About the Datasets
 
 ### 1. The Cholec80 Benchmark Dataset
 - **What it is**: 80 full videos of laparoscopic gallbladder removals recorded at Strasbourg University Hospital (France).
@@ -186,7 +186,7 @@ Each `.txt` label line has: `<class_id> <x_center> <y_center> <width> <height>` 
 
 ---
 
-## 📂 7. Project File Structure
+##  7. Project File Structure
 
 Here is how the files in this repository work:
 
@@ -207,7 +207,7 @@ Here is how the files in this repository work:
 
 ---
 
-## ⚙️ 8. Installation & Setup
+##  8. Installation & Setup
 
 ### Requirements
 - Windows 10/11 or Linux
@@ -241,7 +241,7 @@ This fetches `yolov8s_cholec80.pt` and caches it on your machine.
 
 ---
 
-## 💻 9. How to Run the Project
+##  9. How to Run the Project
 
 ### A. Run Real-Time Critical Event & Tool Detection (Main System)
 Run the improved detection pipeline on a surgical video:
@@ -293,7 +293,7 @@ python test.py --weights runs/train/exp/weights/best.pt --data data.yaml
 
 ---
 
-## 📈 10. Understanding the Output CSV File
+##  10. Understanding the Output CSV File
 
 When you run `critical_detection_improved.py`, it saves a complete log of every frame in `critical_output_improved/critical_events.csv`. Here is what each column means:
 
@@ -320,7 +320,7 @@ When you run `critical_detection_improved.py`, it saves a complete log of every 
 
 ---
 
-## 🎓 11. Faculty Presentation Guide (Simple Answers to Tough Questions)
+##  11. Faculty Presentation Guide (Simple Answers to Tough Questions)
 
 When presenting to your professors and project evaluators, here are simple, clear explanations you can give:
 
@@ -338,7 +338,7 @@ When presenting to your professors and project evaluators, here are simple, clea
 
 ---
 
-## 🔮 12. Future Work
+##  12. Future Work
 
 - **Automatic Bleeding Detection**: Detect sudden red blood pooling in real-time.
 - **Surgery Phase Detection**: Identify whether the surgery is in dissection, clipping, or gallbladder retrieval phase.
@@ -346,9 +346,9 @@ When presenting to your professors and project evaluators, here are simple, clea
 
 ---
 
-## 📚 13. References
+##  13. References
 
 - **Cholec80 Dataset**: Twinanda et al., *"EndoNet: A Deep Architecture for Recognition Tasks on Laparoscopic Videos"*, IEEE TMI, 2017.
 - **Ultralytics YOLOv8**: Modern real-time object detection architecture.
-- **Pretrained Weights**: `cesaraha/yolov8s-surgical-instrument-detection-cholec80` via Hugging Face.
-- Developed for **B.Tech 7th Semester Healthcare AI Project**.
+
+
